@@ -8,6 +8,7 @@ import constants from '@common/constants/constants'
 import { setupApp } from './setup/setup-app'
 import { setupRoutes } from './setup/setup-routes'
 import { setupGlobalMiddlewares } from './setup/setup-global-middlewares'
+import { eventLogger } from '@common/logger/event-logger'
 
 export const app = express()
 
@@ -16,5 +17,5 @@ setupGlobalMiddlewares(app)
 setupRoutes(app, api())
 
 app.listen(constants.SERVER_PORT, () => {
-  console.log(`Server is running on port: ${constants.SERVER_PORT}`)
+  eventLogger.getLoggerInfo(`🚀 Server is running on port: ${constants.SERVER_PORT}`)
 })
