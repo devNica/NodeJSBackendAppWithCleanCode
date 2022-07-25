@@ -1,5 +1,5 @@
 import argon from 'argon2'
-import { CredentialEncryption } from '@core/application/ports/credential-encryption'
+import { CredentialEncryption } from '@core/application/ports/security/credential-encryption'
 
 export class CredentialSecurity implements CredentialEncryption {
   async hash (password: string): Promise<string> {
