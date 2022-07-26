@@ -9,6 +9,15 @@ export interface UserLoginRequest {
   password: string
 }
 
+export interface AddUserInfoRequest {
+  firstname: string
+  lastname: string
+  address: string
+  age: number
+  dni: string
+  birthdate: string
+}
+
 /** DTO INTERFACE DEFINITION */
 export interface UserRegisterDTO extends UserRegisterRequest{
   createdAt: string
@@ -16,6 +25,10 @@ export interface UserRegisterDTO extends UserRegisterRequest{
 }
 
 export interface UserLoginDTO extends UserLoginRequest {}
+
+export interface AddUserInfoDTO extends AddUserInfoRequest {
+  fKUser: number
+}
 
 /** USECASE RESPONSE INTERFACE DEFINITION */
 export interface UserRegisterResponse {
@@ -31,6 +44,10 @@ export interface UserLoginResponse {
   createdAt: string
 }
 
+export interface AddUserInfoResponse {
+  fullname: string
+}
+
 /** USECASE INTERFACE DEFINITION */
 export interface UserRegisterUC {
   execute: (request: UserRegisterRequest) => Promise<UserRegisterResponse> | never
@@ -38,6 +55,10 @@ export interface UserRegisterUC {
 
 export interface UserLoginUC {
   execute: (request: UserLoginRequest) => Promise<UserLoginResponse> | never
+}
+
+export interface AddUserInfoUC{
+  execute: (request: AddUserInfoDTO) => Promise<AddUserInfoResponse> | never
 }
 
 /** REPOSITORY RESPONSE INTERFACE DEFINITION */
