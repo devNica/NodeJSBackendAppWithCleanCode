@@ -1,7 +1,10 @@
 import { CredentialSecurity } from '@common/security/credential-security'
+import { jwtTokenSecurity } from '@common/security/token-security'
+import { UserLoginUsecase } from '@core/application/usecases/auth/user-login'
 import { UserRegisterUseCase } from '@core/application/usecases/auth/user-register'
-import { UserRegisterResponse } from '@core/domain/models/user'
+import { UserLoginResponse, UserRegisterResponse } from '@core/domain/models/user'
 import { findUserByEmailRepository, userRegisterRepository } from '@infrastructure/repositories'
+import { LoginController } from '@interface/controllers/login-controller'
 import { UserRegisterController } from '@interface/controllers/register-controller'
 import { ControllerGenericResponse } from '@interface/responses/controller-generic-response'
 
@@ -13,12 +16,22 @@ export const authControllerFactory = () => {
     findUserByEmailRepository
   )
 
-  const presenter = new ControllerGenericResponse<UserRegisterResponse>()
-  const userRegisterController = new UserRegisterController(userRegisterUC, presenter)
+  const userLoginUC = new UserLoginUsecase(
+    findUserByEmailRepository,
+    jwtTokenSecurity
+  )
+
+  const registerPresenter = new ControllerGenericResponse<UserRegisterResponse>()
+  const loginPresenter = new ControllerGenericResponse<UserLoginResponse>()
+  const userRegisterController = new UserRegisterController(userRegisterUC, registerPresenter)
+  const userLoginController = new LoginController(userLoginUC, loginPresenter)
 
   return {
     userRegisterUC,
+    userLoginUC,
     userRegisterController,
-    presenter
+    userLoginController,
+    registerPresenter,
+    loginPresenter
   }
 }
