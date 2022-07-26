@@ -1,13 +1,13 @@
 import constants from '@common/constants/constants'
 import { getCurrentTimeFormatted } from '@common/helpers/date-utility'
-import { FindUserRepository } from '@core/application/ports/repositories/find-user-repository'
+import { FindUserByEmailRepository } from '@core/application/ports/repositories/find-user-repository'
 import { UserRegisterRepository } from '@core/application/ports/repositories/user-register-repository'
 import { UserRegisterRequest, UserRegisterResponse, UserRegisterUC } from '@core/domain/models/user'
 
 export class UserRegisterUseCase implements UserRegisterUC {
   constructor (
     private readonly userRegisterRepository: UserRegisterRepository,
-    private readonly findUserRepository: FindUserRepository
+    private readonly findUserByEmailRepository: FindUserByEmailRepository
   ) {}
 
   async execute (request: UserRegisterRequest): Promise<UserRegisterResponse> | never {
@@ -17,7 +17,7 @@ export class UserRegisterUseCase implements UserRegisterUC {
       fkGroup: constants.ROL.COMMON_USERS
     }
 
-    const already = await this.findUserRepository.findUserByEmail(request.email)
+    const already = await this.findUserByEmailRepository.findUserByEmail(request.email)
 
     if (already !== null) throw new Error('Email already register')
 

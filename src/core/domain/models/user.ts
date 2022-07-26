@@ -21,5 +21,5 @@ export interface FetchUser {
   email: string
   password: string
   isActive: boolean
-  group: string[]
+  // group: string[]
 }

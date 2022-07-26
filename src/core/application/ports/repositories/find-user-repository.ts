@@ -1,5 +1,5 @@
 import { FetchUser } from '@core/domain/models/user'
 
-export interface FindUserRepository {
-  findUserByEmail: (email: string) => Promise<FetchUser>| null
+export interface FindUserByEmailRepository {
+  findUserByEmail: (email: string) => Promise<FetchUser | null>
 }
