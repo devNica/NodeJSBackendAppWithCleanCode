@@ -4,7 +4,7 @@ import { ResponseHandler, ResponseModel } from '@core/application/ports/response
 import { UserRegisterRequest, UserRegisterResponse, UserRegisterUC } from '@core/domain/models/user'
 import { GenericErrorHandler } from '@core/application/ports/errors/default-application-error'
 
-export class RegisterController implements Controller<UserRegisterResponse | never> {
+export class UserRegisterController implements Controller<UserRegisterResponse | never> {
   constructor (
     private readonly userRegisterUC: UserRegisterUC,
     private readonly presenter: ResponseHandler<UserRegisterResponse>
