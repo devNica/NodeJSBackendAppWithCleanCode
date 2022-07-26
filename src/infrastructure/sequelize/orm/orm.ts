@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize/types'
-import { UserModel, GroupModel } from '../models'
+import { UserModel, GroupModel, UserInfoModel } from '../models'
 
 export default async function sequelizeLoader (sequelizeInstance: Sequelize): Promise<void> {
   // ASSOCIATIONS
@@ -9,6 +9,10 @@ export default async function sequelizeLoader (sequelizeInstance: Sequelize): Pr
 
   // USER MODEL
   UserModel.belongsToMany(GroupModel, { through: 'group_has_user', as: 'userRoles', foreignKey: 'fk_user', onDelete: 'RESTRICT' })
+  UserModel.hasOne(UserInfoModel, { foreignKey: 'fk_user', onDelete: 'RESTRICT' })
+
+  // USER INFO MODEL
+  UserInfoModel.belongsTo(UserModel, { foreignKey: 'fk_user' })
 
   await sequelizeInstance.sync({ alter: false })
     .then(_res => {

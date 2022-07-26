@@ -20,7 +20,7 @@ export class UserRegisterUseCase implements UserRegisterUC {
       fkGroup: constants.ROL.COMMON_USERS
     }
 
-    const already = await this.findUserByEmailRepository.findUserByEmail(request.email)
+    const already = await this.findUserByEmailRepository.findByEmail(request.email)
 
     if (already !== null) throw new Error('Email already register')
 

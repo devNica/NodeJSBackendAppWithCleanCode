@@ -12,7 +12,7 @@ export class UserRepository implements
     FindUserByEmailRepository,
     UserRegisterRepository,
     UserLoginRepository {
-  async findUserByEmail (email: string): Promise<FetchUser | null> {
+  async findByEmail (email: string): Promise<FetchUser | null> {
     const user = await UserModel.findOne({ where: { email } })
     if (user === null) return null
     return { id: user.id, email: user.email, password: user.password, isActive: user.isActive }
