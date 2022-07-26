@@ -22,7 +22,9 @@ GroupHasUserModel.init({
     references: {
       model: 'group',
       key: 'id'
-    }
+    },
+    onDelete: 'RESTRICT',
+    onUpdate: 'CASCADE'
   },
   fkUser: {
     primaryKey: true,
@@ -31,7 +33,9 @@ GroupHasUserModel.init({
     references: {
       model: 'user',
       key: 'id'
-    }
+    },
+    onDelete: 'RESTRICT',
+    onUpdate: 'CASCADE'
   }
 }, {
   sequelize: sequelizeConfig,

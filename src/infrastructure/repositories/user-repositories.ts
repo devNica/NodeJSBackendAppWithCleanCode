@@ -20,7 +20,7 @@ export class UserRepository implements
     await sequelizeConfig.transaction(async t => {
       newUser = await UserModel.create({ email: data.email, password: data.password, createdAt: data.createdAt }, { transaction: t })
       await GroupHasUserModel.create({ fkGroup: data.fkGroup, fkUser: newUser.id }, { transaction: t })
-      throw new Error('oops, it is not possible to process the data')
+      // throw new Error('oops, it is not possible to process the data')
     })
     return { id: newUser.id }
   }

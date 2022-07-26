@@ -1,20 +1,16 @@
 import { Sequelize } from 'sequelize/types'
-import { UserModel, GroupModel, GroupHasUserModel } from '../models'
+import { UserModel, GroupModel } from '../models'
 
 export default async function sequelizeLoader (sequelizeInstance: Sequelize): Promise<void> {
   // ASSOCIATIONS
 
   // GROUP MODEL
-  GroupModel.hasMany(GroupHasUserModel, { foreignKey: 'fk_group' })
-
-  // GROUP_HAS_USER MODEL
-  GroupHasUserModel.belongsTo(GroupModel, { foreignKey: 'fk_group' })
-  GroupHasUserModel.belongsTo(UserModel, { foreignKey: 'fk_user' })
+  GroupModel.belongsToMany(UserModel, { through: 'group_has_user', as: 'roles', foreignKey: 'fk_group', onDelete: 'RESTRICT' })
 
   // USER MODEL
-  UserModel.hasMany(GroupHasUserModel, { foreignKey: 'fk_user' })
+  UserModel.belongsToMany(GroupModel, { through: 'group_has_user', as: 'userRoles', foreignKey: 'fk_user', onDelete: 'RESTRICT' })
 
-  await sequelizeInstance.sync({ alter: true })
+  await sequelizeInstance.sync({ alter: false })
     .then(_res => {
       console.log('all models has been created')
     }).catch(err => console.error(err))
