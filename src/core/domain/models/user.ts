@@ -26,7 +26,9 @@ export interface UserLoginResponse {
   id: number
   email: string
   token: string
-  group: string[]
+  isActive: boolean
+  roles: string[]
+  createdAt: string
 }
 
 /** USECASE INTERFACE DEFINITION */
@@ -44,5 +46,9 @@ export interface FetchUser {
   email: string
   password: string
   isActive: boolean
-  // group: string[]
+}
+
+export interface FetchUserAccount extends FetchUser{
+  roles: string[]
+  createdAt: string
 }

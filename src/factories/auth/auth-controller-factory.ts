@@ -3,7 +3,7 @@ import { jwtTokenSecurity } from '@common/security/token-security'
 import { UserLoginUsecase } from '@core/application/usecases/auth/user-login'
 import { UserRegisterUseCase } from '@core/application/usecases/auth/user-register'
 import { UserLoginResponse, UserRegisterResponse } from '@core/domain/models/user'
-import { findUserByEmailRepository, userRegisterRepository } from '@infrastructure/repositories'
+import { findUserByEmailRepository, userLoginRepository, userRegisterRepository } from '@infrastructure/repositories'
 import { LoginController } from '@interface/controllers/login-controller'
 import { UserRegisterController } from '@interface/controllers/register-controller'
 import { ControllerGenericResponse } from '@interface/responses/controller-generic-response'
@@ -17,7 +17,7 @@ export const authControllerFactory = () => {
   )
 
   const userLoginUC = new UserLoginUsecase(
-    findUserByEmailRepository,
+    userLoginRepository,
     jwtTokenSecurity
   )
 
