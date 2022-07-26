@@ -1,4 +1,7 @@
-export type HttpResponse = 'successRequest' | 'internalServerErrorRequets'
+export type HttpResponse =
+  'successRequest' | 'createdRequest' | 'unAuthorizedRequest' |
+  'forbiddenRequest' | 'badRequest' | 'internalServerErrorRequets' |
+  'notFoundRequest' | 'payloadToLargeRequest' | 'unProcessableEntityRequest'
 
 export interface ResponseModel<T> {
   type: HttpResponse
@@ -7,5 +10,5 @@ export interface ResponseModel<T> {
 }
 
 export interface ResponseHandler<T = any> {
-  response: (body: T) => Promise<ResponseModel<T>>
+  response: (body: T, type: HttpResponse, message: string) => Promise<ResponseModel<T>>
 }

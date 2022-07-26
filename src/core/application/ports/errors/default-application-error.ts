@@ -1,20 +1,19 @@
-import { ResponseModel } from '../responses/response-model'
+import { ResponseModel, HttpResponse } from '../responses/response-model'
 
 export interface ErrorParams {
-  statusCode: number
-  statusApi: boolean
+  type: string
   messsage: string
 }
 
 export type ErrorResponseModel = Omit<ResponseModel<ErrorParams>, 'body'>
 
-export class DefaultAplicationError extends Error implements ErrorResponseModel {
-  public statusCode = 500
-  readonly statusApi = false
+export class GenericErrorHandler extends Error implements ErrorResponseModel {
+  public type: HttpResponse
   public message: string
 
-  constructor (message: string) {
+  constructor (message: string, type: HttpResponse) {
     super(message)
     this.message = message
+    this.type = type
   }
 }
