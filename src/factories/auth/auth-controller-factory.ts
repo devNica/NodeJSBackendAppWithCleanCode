@@ -18,7 +18,8 @@ export const authControllerFactory = () => {
 
   const userLoginUC = new UserLoginUsecase(
     userLoginRepository,
-    jwtTokenSecurity
+    jwtTokenSecurity,
+    new CredentialSecurity()
   )
 
   const registerPresenter = new ControllerGenericResponse<UserRegisterResponse>()
