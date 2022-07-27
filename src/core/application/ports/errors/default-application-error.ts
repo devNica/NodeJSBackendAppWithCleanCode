@@ -13,7 +13,7 @@ export class GenericErrorHandler extends Error implements ErrorResponseModel {
 
   constructor (message: string, type: HttpResponse) {
     super(message)
-    this.message = message
+    this.message = `${type},${message}`
     this.type = type
   }
 }

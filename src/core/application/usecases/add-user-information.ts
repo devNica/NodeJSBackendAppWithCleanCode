@@ -10,8 +10,8 @@ export class AddUserInformationUseCase implements AddUserInfoUC {
   ) {}
 
   async execute (request: AddUserInfoDTO): Promise<AddUserInfoResponse> | never {
-    const check = await this.findUserByIdRepository.findById(request.fKUser)
-    if (check === null) throw new GenericErrorHandler('Invalid  requets', 'badRequest')
+    const check = await this.findUserByIdRepository.findById(request.fkUser)
+    if (check === null) throw new GenericErrorHandler('user account not found', 'unProcessableEntityRequest')
     const response = await this.addUserInfoRepository.addUserInfo(request)
     if (response === null) throw new GenericErrorHandler('oops, the process did not complete correctly', 'internalServerErrorRequets')
     return {

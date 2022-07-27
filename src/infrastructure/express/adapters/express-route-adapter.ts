@@ -1,4 +1,5 @@
 import { Controller } from '@core/application/ports/controllers/controller'
+import { HttpResponse } from '@core/application/ports/responses/response-model'
 import { NextFunction, Request, Response } from 'express'
 import { ApiResponse } from './api-response-adapter'
 
@@ -16,7 +17,10 @@ export const expressRouterAdapter = <T>(controller: Controller<T>) => {
           next(ApiResponse[`${type}`](message, body))
         })
         .catch((err) => {
-          return next(ApiResponse.badRequest(err.message, {}))
+          const r = err.message.split(',')
+          const type: HttpResponse = r[0]
+          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+          next(ApiResponse[`${type}`](r[1], {}))
         })
     )
   }
