@@ -6,9 +6,9 @@ export interface UserInfoEntity{
   firstname: string
   lastname: string
   address: string
-  age: string
+  age: number
   dni: string
-  birtdate: string
+  birthdate: string
   fkUser: number
 }
 
@@ -20,9 +20,9 @@ export default class UserInfoModel extends Model<UserInfoEntity, UserAttrInput> 
   public firstname!: string
   public lastname!: string
   public address!: string
-  public age!: string
+  public age!: number
   public dni!: string
-  public birtdate!: string
+  public birthdate!: string
   public fkUser!: number
 }
 
@@ -53,7 +53,7 @@ UserInfoModel.init({
     type: DataTypes.STRING,
     allowNull: true
   },
-  birtdate: {
+  birthdate: {
     type: DataTypes.DATEONLY,
     allowNull: true
   },

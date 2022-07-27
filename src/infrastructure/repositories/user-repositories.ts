@@ -1,21 +1,37 @@
 import { isNull, parseBoolean } from '@common/helpers/boolean-utility'
+import { AddUserInfoRepository } from '@core/application/ports/repositories/add-userinfo-repository'
 import { FindUserByEmailRepository } from '@core/application/ports/repositories/find-user-by-email-repository'
+import { FindUserByIDRepository } from '@core/application/ports/repositories/find-user-byId-respository'
 import { UserLoginRepository } from '@core/application/ports/repositories/user-login-repository'
 import { UserRegisterRepository } from '@core/application/ports/repositories/user-register-repository'
-import { FetchUser, FetchUserAccount, UserRegisterDTO, UserRegisterResponse } from '@core/domain/models/user'
+import { AddUserInfoDTO, AddUserInfoResponse, FetchUser, FetchUserAccount, UserRegisterDTO, UserRegisterResponse } from '@core/domain/models/user'
 import { fetchUserAccountQuery } from '@infrastructure/db/plain-queries'
 import sequelizeConfig from '@infrastructure/sequelize/connection'
-import { GroupHasUserModel, UserModel } from '@infrastructure/sequelize/models'
+import { GroupHasUserModel, UserInfoModel, UserModel } from '@infrastructure/sequelize/models'
 import { QueryTypes } from 'sequelize'
 
 export class UserRepository implements
     FindUserByEmailRepository,
     UserRegisterRepository,
-    UserLoginRepository {
+    UserLoginRepository,
+    AddUserInfoRepository,
+    FindUserByIDRepository {
   async findByEmail (email: string): Promise<FetchUser | null> {
     const user = await UserModel.findOne({ where: { email } })
     if (user === null) return null
     return { id: user.id, email: user.email, password: user.password, isActive: user.isActive }
+  }
+
+  async findById (id: number): Promise<FetchUser | null> {
+    const user = await UserModel.findByPk(id)
+    if (user === null) return null
+    return { ...user }
+  }
+
+  async addUserInfo (data: AddUserInfoDTO): Promise<AddUserInfoResponse | null> {
+    const ormResponse = await UserInfoModel.create(data)
+    if (isNull(ormResponse)) return null
+    return { fullname: `${ormResponse.firstname}-${ormResponse.lastname}` }
   }
 
   async fetchUserAccount (email: string): Promise<FetchUserAccount | null> {

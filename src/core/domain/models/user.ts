@@ -27,7 +27,7 @@ export interface UserRegisterDTO extends UserRegisterRequest{
 export interface UserLoginDTO extends UserLoginRequest {}
 
 export interface AddUserInfoDTO extends AddUserInfoRequest {
-  fKUser: number
+  fkUser: number
 }
 
 /** USECASE RESPONSE INTERFACE DEFINITION */
